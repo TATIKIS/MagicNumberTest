@@ -59,8 +59,9 @@ import org.junit.jupiter.api.Test;
  * TestSuite for BasicDataSource
  */
 public class TestBasicDataSource extends TestConnectionPool {
-
     private static final String CATALOG = "test catalog";
+    private static SQLException exception;
+    private static final SQLException ex = exception;
 
     @BeforeAll
     public static void setUpClass() {
@@ -130,6 +131,7 @@ public class TestBasicDataSource extends TestConnectionPool {
         final Connection rawActiveConnection = ((DelegatingConnection<?>) activeConnection).getInnermostDelegate();
         assertFalse(activeConnection.isClosed());
         assertFalse(rawActiveConnection.isClosed());
+        // na 131-133 está como magic number acredito que os devs já corrigiram pois não identifiquei o smell
 
         // idle connection is in pool but closed
         final Connection idleConnection = getConnection();
@@ -162,10 +164,10 @@ public class TestBasicDataSource extends TestConnectionPool {
         try {
             getConnection();
             fail("Expecting SQLException");
-        } catch (final SQLException ex) {
+        } catch (SQLException ex) { /*extrai o final e coloquie ex como constante, mas acredito que os devs já
+        tenham corrigido antes - magic number smell*/
             // Expected
         }
-
         // Redundant close is OK
         ds.close();
 
