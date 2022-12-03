@@ -128,9 +128,14 @@ public class TestManagedDataSource extends TestConnectionPool {
             // auto close.
         }
         transactionManager.commit();
-        assertEquals(1, pool.getBorrowedCount());
-        assertEquals(1, pool.getReturnedCount());
-        assertEquals(0, pool.getNumActive());
+
+        int numBorrowedExpected = 1;
+        int numReturnedExpected = 1;
+        int numActiveExpected = 0;
+
+        assertEquals(numBorrowedExpected, pool.getBorrowedCount());
+        assertEquals(numReturnedExpected, pool.getReturnedCount());
+        assertEquals(numActiveExpected, pool.getNumActive());
     }
 
     @Test

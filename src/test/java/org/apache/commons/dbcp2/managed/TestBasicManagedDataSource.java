@@ -161,8 +161,11 @@ public class TestBasicManagedDataSource extends TestBasicDataSource {
             transactionManager.rollback();
         }
 
-        assertEquals(0, ds.getNumActive());
-        assertEquals(1, ds.getNumIdle());
+        int numActiveExpected = 0;
+        int numIdleExpected = 1;
+
+        assertEquals(numActiveExpected, ds.getNumActive());
+        assertEquals(numIdleExpected, ds.getNumIdle());
     }
 
     @Test
